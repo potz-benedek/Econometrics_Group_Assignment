@@ -196,3 +196,19 @@ data <- data %>%
     by = c("settlement_join" = "Settlement")
   ) %>%
   dplyr::select(-settlement_join) # remove helper column
+
+#Dummy variable for the capital city
+data <- data %>%
+  mutate(Status_capital = if_else(Status == "fővárosi kerület", 1, 0))
+
+#Dummy variable for the cities
+data <- data %>%
+  mutate(Status_city = if_else(Status == "város", 1, 0))
+
+#Dummy variable for the villages
+data <- data %>%
+  mutate(Status_village = if_else(Status == "község" | Status == "nagyközség", 1, 0))
+
+#Dummy variable for the main cities
+data <- data %>%
+  mutate(Status_maincities = if_else(Status == "megyei jogú város" | Status == "megyeszékhely, megyei jogú város", 1, 0))
